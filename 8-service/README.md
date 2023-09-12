@@ -10,7 +10,7 @@ sudo vim /etc/systemd/system/check-net.service
 ###############
 
 [Service]
-ExecStart=/home/kuber/linux-service/check-internet-connectivity.sh
+ExecStart=/home/user/linux-service/check-internet-connectivity.sh
 
 #############
 
