@@ -30,3 +30,7 @@
 #
 # #####################################
 # while true; do echo "infinite loop"; sleep 1; done
+
+
+
+# echo $$   # get PID of running script.
