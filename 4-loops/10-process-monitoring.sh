@@ -1,8 +1,9 @@
 #!/bin/bash
 
-read -p "Enter The process name: " proc
+
 while true 
 do
+	read -p "Enter The process name: " proc
 	output="$(pgrep $proc)"
 	if [[ -n "$output" ]]
 	then
