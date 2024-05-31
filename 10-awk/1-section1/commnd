@@ -1,0 +1,10 @@
+BEGIN{
+    count=1
+}
+{
+    count++
+}
+
+END{
+    printf count
+}

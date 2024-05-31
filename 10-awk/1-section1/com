@@ -1,0 +1,10 @@
+BEGIN{
+    printf "first print"
+}
+{
+    print $1
+}
+
+END{
+    printf "asdf"
+}
