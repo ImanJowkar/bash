@@ -21,6 +21,17 @@ awk -f com random-num-str.txt
 
 
 
+```
 
- 
+
+# Internal Variable
+
+```
+
+
+
+
+
+
+
 ```
