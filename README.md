@@ -268,19 +268,134 @@ do
 done
 
 
-
+###################################
 
 for i in {1..41}
 do
 	echo "number: $i"
 done
 
-
+###################################
 
 for i in {10..400..50}
 do
 	echo "We are in iterate: $i"
 done
+
+###################################
+
+# show number of line in each file in current directory
+for item in ./*
+do
+        if [[ -f "$item" ]]
+        then
+                echo "Number of line in $item is: $(wc -l $item)"
+                sleep 1
+                echo "###########################################"
+        fi
+done
+
+
+###################################
+
+for file in *.py
+do
+        mv "$file" "rename_$file"
+done
+
+
+
+
+######################################
+# c style for loop
+
+for ((t=0;t<=20;t++))
+do
+        echo "t = $t"
+done
+
+
+
+#######################################
+:"
+This app drop incoming connection from below ip
+"
+
+DROPPED_IPS="8.8.8.8 1.1.1.1 4.4.4.4"
+
+for ip in $DROPPED_IPS
+do
+        echo "Dropping packets from $ip"
+        iptables -I INPUT -s $ip -j DROP
+done
+
+
+
+############################################
+# drop ip from file
+
+for ip in $(cat ips.txt)
+do
+	echo "Dropping packets form $ip"
+	iptables -t filter -I INPUT -s $ip -j DROP
+done
+
+
+###############################################
+
+# while loop
+
+b=0
+
+while [[ $b -lt 10 ]]
+do
+	echo "b: $b"
+	((b++)) # let b=b+1
+done
+
+
+
+#######################################################
+
+read -p "Enter something: " var1
+read -p "Enter The same: " var2
+
+while [ "$var1" != "$var2" ]
+do
+	echo "I said Enter The same thing :(, Enter again."
+	read -p "Enter something: " var1
+	read -p "Enter The same: " var2
+done
+
+echo "well done."
+echo "Good Neight.:))))"
+
+
+#############################################################
+
+while true 
+do
+	read -p "Enter The process name: " proc
+	output="$(pgrep $proc)"
+	if [[ -n "$output" ]]
+	then
+		echo "The proccess \"$proc\" is running."
+		echo "The pid of the proccess is \"$output\" "
+		echo "##############"
+	else
+		echo "The proccess \"$proc\" is not running"
+	fi
+	sleep 3
+done
+
+
+
+```
+
+## case statement
+
+```
+
 
 
 
