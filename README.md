@@ -256,3 +256,32 @@ else
 fi
 
 ```
+
+
+## loops
+
+```
+
+for name in apple iman jafar ehsan  "test"
+do
+	echo "name is: $name"
+done
+
+
+
+
+for i in {1..41}
+do
+	echo "number: $i"
+done
+
+
+
+for i in {10..400..50}
+do
+	echo "We are in iterate: $i"
+done
+
+
+
+```
