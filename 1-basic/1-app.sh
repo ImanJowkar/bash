@@ -1,6 +1,6 @@
 #!/bin/bash
 : '
-This is multi line coammand
+This is multi line comment
 '
 
 
