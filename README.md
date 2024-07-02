@@ -437,3 +437,81 @@ esac
 
 
 ```
+
+## functions
+
+```
+function echo_name () {
+	echo "This is a simple function"
+}
+
+
+
+
+# another way to define funciton
+
+echo_name () {
+	echo "this is a simple function"
+}
+
+echo_name
+
+
+
+##############
+# count a word in a file
+
+lines_in_files () {
+	grep -c "$1" "$2"
+}
+
+n=$(lines_in_files "iman" "/home/iman/name")
+echo $n
+
+####################
+
+# variable scope
+
+
+var1="XXXXXXXX"
+var2="YYYYYYYY"
+
+
+echo "Before calling func1: var1=$var1, var2=$var2"
+
+func1() {
+	var1="AAAAAAAA"
+	echo "Inside func1: var1=$var1, var2=$var2"
+}
+
+func1
+
+echo "After calling func1: var1=$var1, var2=$var2"
+
+
+echo "######################################################"
+
+var1="XXXXXXXX"
+var2="YYYYYYYY"
+
+
+echo "Before calling func2: var1=$var1, var2=$var2"
+
+func2() {
+        local var1="AAAAAAAAAAA"
+        echo "Inside func2: var1=$var1, var2=$var2"
+}
+
+func2
+
+echo "After calling func2: var1=$var1, var2=$var2"
+
+
+
+
+
+
+
+
+
+```
