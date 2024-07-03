@@ -13,3 +13,4 @@ if total - used < 10:
     print(Fore.RED + 'Pay attention, your root partition is going to be full !!!!!!!!')
 else:
     print(Fore.GREEN + f"feel free, your root partition is free. you have {total-used}G free")
+    

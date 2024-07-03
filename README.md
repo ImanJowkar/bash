@@ -296,12 +296,32 @@ do
 done
 
 
+
+##############################
+
+# inline for loop
+
+for i in {1..3}; do echo $i; done
+for i in `ls`; do cat $i && sleep 3; done
+
+
+
+
+
+
+
+
+
+
 ###################################
 
 for file in *.py
 do
         mv "$file" "rename_$file"
 done
+
+
+
 
 
 
@@ -505,6 +525,239 @@ func2() {
 func2
 
 echo "After calling func2: var1=$var1, var2=$var2"
+
+
+
+
+
+
+
+
+
+```
+
+
+## Services
+#### example-1
+in linux we have 11 types of unit that systemd control them.
+```
+
+systemctl status zabbix-server.service
+systemctl cat zabbix-server.service
+systemctl list-units --type service
+
+
+
+########################################## 
+
+#!/bin/bash
+
+ping -c 4 yahoo.com >>/dev/null 2> /dev/null
+if [[ $? -eq 0 ]]
+then
+        echo "Connected to the Internet, OK!."
+else
+        echo "your server is not connected to the Internet, Fail."
+fi
+sleep 1
+
+#################################################
+
+vim /etc/systemd/system/net-check.service
+
+# add below config
+
+#######
+
+[Unit]
+Description="When calling this app, it check net connectivity of your server."
+After=network.target
+
+
+
+[Service]
+User=root
+ExecStart=/root/1-check-net-connectivity.sh
+#Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
+
+
+#######
+
+systemctl daemon-reload
+systemd-analyze verify net-check.service
+systemctl enable net-check.service --now
+systemctl status net-check.service
+journalctl -u net-check.service
+journalctl -f -u net-check.service
+
+
+
+## now create a timer
+vim /etc/systemd/system/net-check.timer
+
+#############
+[Timer]
+OnCalendar=*-*-* *:*:00/20
+Unit=net-check.service
+#############
+
+
+systemd-analyze verify net-check.timer
+systemctl daemon-reload
+systemctl start net-check.timer
+
+```
+
+#### example-2
+
+```
+######################################
+#!/bin/bash
+
+PERCENTAGE=80
+
+disk_usage=`df -Ph | egrep '/dev/mapper' | awk '{print $5}' | sed s/%//g`
+
+if [ $disk_usage -ge $PERCENTAGE ];
+then
+	echo "the root location approximately full"
+else
+	echo "ok"
+fi
+##########################################
+
+
+
+vim /etc/systemd/system/disk-usage.service
+
+# add below config
+
+#######
+
+[Unit]
+Description="When calling this app, it check the root disk usage"
+After=network.target
+
+
+
+[Service]
+User=root
+ExecStart=/root/disk-check.sh
+#Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
+
+
+#######
+
+systemctl daemon-reload
+systemd-analyze verify disk-usage.service
+systemctl enable disk-usage.service --now
+systemctl status disk-usage.service
+journalctl -u disk-usage.service
+journalctl -f -u disk-usage.service
+
+
+
+## now create a timer
+vim /etc/systemd/system/disk-usage.timer
+
+#############
+[Timer]
+OnCalendar=*-*-* *:*:00/20
+Unit=disk-usage.service
+#############
+
+
+systemd-analyze verify disk-usage.timer
+systemctl daemon-reload
+systemctl start disk-usage.timer
+
+
+dd if=/dev/zero of=/root/file1 bs=1M count=5000
+
+```
+
+#### example-3-python
+
+```
+##########################
+
+#!/usr/bin/env /root/vevn/bin/python
+
+
+import shutil
+from hurry.filesize import size
+from colorama import Fore
+du = shutil.disk_usage("/")
+print(du)
+total = int(size(du.total).replace("G", ""))
+used = int(size(du.used).replace("G", ""))
+
+
+print(f"total disk is: {total}G")
+print(f"total disk usage is {used}G")
+if total - used < 10:
+    print(Fore.RED + 'Pay attention, your root partition is going to be full !!!!!!!!')
+else:
+    print(Fore.GREEN + f"feel free, your root partition is free. you have {total-used}G free")
+
+##########################
+
+
+vim /etc/systemd/system/disk-usage-python.service
+
+# add below config
+
+#######
+
+[Unit]
+Description="When calling this app, it check total disk usage."
+After=network.target
+
+
+
+[Service]
+User=root
+ExecStart=/root/app.py
+#Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
+
+
+#######
+
+systemctl daemon-reload
+systemd-analyze verify disk-usage-python.service
+systemctl enable disk-usage-python.service --now
+systemctl status disk-usage-python.service
+journalctl -u disk-usage-python.service
+journalctl -f -u disk-usage-python.service
+
+
+
+## now create a timer
+vim /etc/systemd/system/disk-usage-python.timer
+
+#############
+[Timer]
+OnCalendar=*-*-* *:*:00/20
+Unit=disk-usage-python.service
+#############
+
+
+systemd-analyze verify disk-usage-python.timer
+systemctl daemon-reload
+systemctl start disk-usage-python.timer
+
 
 
 
