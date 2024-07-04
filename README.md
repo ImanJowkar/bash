@@ -3,6 +3,18 @@
 This [refrence](https://www.cyberithub.com/category/scripting/bash/) have useful bash excersize and best practice for learning bash
 
 
+## add comment in the begining of the bash file
+
+```
+# Auther: x
+# Date: 2021
+# description: sdfds
+# usage: ./app.sh
+```
+
+
+
+
 ## variables
 ```
 name=jack
@@ -10,6 +22,16 @@ age=32
 
 os="Windows"
 echo ${os}11
+
+x=1 y=2 z=4
+echo $x
+echo $y
+echo $z
+
+
+out=`ls -lah`
+echo $out
+
 
 multi_var="$name $age"
 echo "THis is multi-var: ${multi_var}"
@@ -58,7 +80,52 @@ echo $n
 done
 
 
+# number of char in a text
+txt="asdwegdfhrtyu"
+echo ${#txt}
+
 ```
+
+
+## arithmatic 
+
+```
+num=2
+echo $(( $num + 2))
+
+
+
+let a=2+12
+echo $a 
+
+
+
+let "a = 2 + 3"
+echo $a 
+
+
+let a++
+echo $a
+
+let a--
+echo $a
+
+let "a = 47 * 5"
+echo $a
+
+
+let "a = $1 + 30"
+echo $a # 30 + first command line argument
+
+
+
+num=$( expr 2 + 2)
+echo $num
+
+
+
+```
+
 
 ## Positional Parameters
 
@@ -86,6 +153,34 @@ echo $$   # give the process ID of the shell
 ## conditions
 
 ```
+
+
+test # specifiy a variable which is empty or not
+
+test -z $var
+echo $?
+
+---------------------
+#!/bin/bash
+
+num=1
+
+if [[ -z $num ]]; then
+
+        echo "variable num is empty..."
+else
+        echo "variable num is not empty..."
+fi
+------------------------
+
+
+# inline if
+
+if test -z $name; then echo "empty variable"; fi
+
+
+
+----------------
 #!/bin/bash
 
 print_style () {
@@ -255,7 +350,38 @@ else
 	echo "String is zero lenght."
 fi
 
+
+----------------------------
+# bad input
+#!/bin/bash
+
+num=1
+
+if [[ $# -ne 2 ]]; then
+
+        echo "bad input"
+        echo "usage: $0 <dir> <file>"
+        exit 1
+fi
+
+dir=$1
+file=$2
+path=${dir}/${file}
+
+if [[ ! -d dir ]]; then
+        mkdir $dir || { echo "can't create ${dir} "; exit 1; }
+fi
+
+
+if [[ ! -f $path ]]; then
+        touch $path || { echo "can't create ${path} "; exit 1; }
+fi
+
+
 ```
+
+
+
 
 
 ## loops
@@ -759,12 +885,6 @@ systemctl daemon-reload
 systemctl start disk-usage-python.timer
 
 
-
-
-
-
-
-
-
-
 ```
+
+
