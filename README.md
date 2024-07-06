@@ -536,6 +536,20 @@ done
 
 
 
+
+
+# until
+
+
+un
+
+
+
+
+
+
+
+
 ```
 
 ## case statement
@@ -888,3 +902,48 @@ systemctl start disk-usage-python.timer
 ```
 
 
+## find
+
+```
+
+# we have two option for finding a file in linux: 1-locate, 2-find
+# 'locate' is faster than a 'find', because it use a database which we need update it constantly
+
+
+# locate
+apt install mlocate                             # install locate
+sudo updatedb                                   # update database
+
+locate file_name
+locate admin
+
+locate -i file_name                             # it isn't case sensetive
+
+
+
+# find ----> find search in realtime, therefor it is more slower than locate
+
+find . -name file.txt                           # search "file.txt" in . directory
+find . -iname file.txt                          # case insensetive
+find . -name "file.*" -delete                   # find "file.*" and delete all of them
+find /etc/ -name shadow                         # search for "shadow" in /etc/ directory
+
+
+find /etc/ -type d                              # show all directory in /etc
+find /etc/ -type d -maxdepth 2                  # show directory in /etc/ which have depth=2
+find /etc/ -type d -maxdepth 2 -perm 755        # find by permision
+find /etc/ -type d -size +100K -ls              # find the dirctory more than 100K size
+find /etc/ -type d -size +10M -ls
+find /etc/ -type f -size +5M -size -10M
+
+find /var/ -type f -mtime 0 -ls                 # show file which modified in one day past
+find /var/ -type f -mtime 1 -ls                 # show file which modified in two day past
+find /var/ -type f -mmin -60 -ls                 # show file which modified in 60 minute past
+find /var/ -type f -user iman -ls
+find /etc/ -type f -not -group root -ls
+
+
+
+find / -size +10M
+
+```
