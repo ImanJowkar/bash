@@ -538,11 +538,13 @@ done
 
 
 
-# until
+# until 
 
-
-un
-
+until false
+do
+        echo "hello"
+        sleep 1
+done
 
 
 
@@ -945,5 +947,14 @@ find /etc/ -type f -not -group root -ls
 
 
 find / -size +10M
+
+```
+
+
+## redierct
+
+```
+
+
 
 ```
