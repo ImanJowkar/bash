@@ -705,11 +705,7 @@ sleep 1
 
 #################################################
 
-vim /etc/systemd/system/net-check.service
-
-# add below config
-
-#######
+cat >> /etc/systemd/system/net-check.service << EOF
 
 [Unit]
 Description="When calling this app, it check net connectivity of your server."
@@ -725,9 +721,8 @@ ExecStart=/root/1-check-net-connectivity.sh
 
 [Install]
 WantedBy=multi-user.target
+EOF
 
-
-#######
 
 systemctl daemon-reload
 systemd-analyze verify net-check.service
@@ -774,11 +769,7 @@ fi
 
 
 
-vim /etc/systemd/system/disk-usage.service
-
-# add below config
-
-#######
+cat >> /etc/systemd/system/disk-usage.service << EOF
 
 [Unit]
 Description="When calling this app, it check the root disk usage"
@@ -794,9 +785,8 @@ ExecStart=/root/disk-check.sh
 
 [Install]
 WantedBy=multi-user.target
+EOF
 
-
-#######
 
 systemctl daemon-reload
 systemd-analyze verify disk-usage.service
@@ -808,14 +798,11 @@ journalctl -f -u disk-usage.service
 
 
 ## now create a timer
-vim /etc/systemd/system/disk-usage.timer
-
-#############
+cat >> /etc/systemd/system/disk-usage.timer << EOF
 [Timer]
 OnCalendar=*-*-* *:*:00/20
 Unit=disk-usage.service
-#############
-
+EOF
 
 systemd-analyze verify disk-usage.timer
 systemctl daemon-reload
@@ -853,12 +840,7 @@ else:
 ##########################
 
 
-vim /etc/systemd/system/disk-usage-python.service
-
-# add below config
-
-#######
-
+cat >> /etc/systemd/system/disk-usage-python.service << EOF
 [Unit]
 Description="When calling this app, it check total disk usage."
 After=network.target
@@ -873,9 +855,7 @@ ExecStart=/root/app.py
 
 [Install]
 WantedBy=multi-user.target
-
-
-#######
+EOF
 
 systemctl daemon-reload
 systemd-analyze verify disk-usage-python.service
@@ -887,13 +867,12 @@ journalctl -f -u disk-usage-python.service
 
 
 ## now create a timer
-vim /etc/systemd/system/disk-usage-python.timer
-
-#############
+cat >> /etc/systemd/system/disk-usage-python.timer << EOF
 [Timer]
 OnCalendar=*-*-* *:*:00/20
 Unit=disk-usage-python.service
-#############
+EOF
+
 
 
 systemd-analyze verify disk-usage-python.timer
@@ -955,6 +934,10 @@ find / -size +10M
 
 ```
 
+ssh -V &> version.txt
+
 
 
 ```
+
+
