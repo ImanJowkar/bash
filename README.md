@@ -669,9 +669,48 @@ func2
 echo "After calling func2: var1=$var1, var2=$var2"
 
 
+## return a value in function 
+
+
+# solution 1
+----------------------------
+#!/bin/bash
+
+add(){
+
+        a=$1
+        b=$2
+        z=$(( $a * $b ))
+}
+
+
+add 2 3
+echo $z
+-----------------------------------
 
 
 
+# solution 2
+----------------------------------
+#!/bin/bash
+
+
+
+add(){
+
+        a=$1
+        b=$2
+        local z=$(( $a * $b ))
+        echo $z
+}
+
+
+output=`add 2 3`
+echo $output
+
+
+
+---------------------------------
 
 
 
@@ -941,3 +980,19 @@ ssh -V &> version.txt
 ```
 
 
+
+## how to import another bash-script in another file
+
+```
+in the destination bash-script file use `source ~/app/old-bash.sh`
+
+
+!#/bin/bash
+
+source ~/home/test/app.sh
+
+
+
+a=1
+b=3
+```
