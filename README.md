@@ -996,3 +996,90 @@ source ~/home/test/app.sh
 a=1
 b=3
 ```
+
+
+
+## tr 
+
+```
+echo "Iman Jowkar" | tr "[:lower:]" "[:upper:]"
+ echo "Ila;sdfj@#4sldkfjar" | tr -dc "a-zA-Z0-9"
+
+
+```
+
+
+## array
+
+```
+arr=(iman sama hos fat)
+
+for names in ${arr[@]};
+do 
+	echo $names
+done
+
+
+```
+
+## random number
+
+```
+ echo $(( RANDOM%5 )) # get random number between 0 5
+
+
+ echo $(( RANDOM%6 )) # get random number between 0 6
+
+```
+
+
+# menu
+
+```
+#!/bin/bash
+
+PS3="Choose fruits: "
+select fruit in Apple Benana x y "this is " Quit
+do
+	echo "fruit is $fruit"
+	echo "Reply is $REPLY"
+
+	case $REPLY in
+		1)
+			echo "You love Apple"
+			;;
+		2)
+			echo "You love Benana"
+			;;
+		3)
+			echo "you love x"
+			;;
+		4)
+			echo "you love y"
+			;;
+		5)
+			echo "you love sdf"
+			;;
+		6)
+			echo "Quitting"
+			sleep 1
+			break
+			;;
+		*)
+			echo "bad input!!!"
+			;;
+	esac
+done 
+
+
+
+
+```
+
+## options
+
+```
+# getopts
+
+
+```
