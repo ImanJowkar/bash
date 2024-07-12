@@ -63,7 +63,7 @@ var1=osLINx
 echo ${var1}
 echo ${var1^^}   # upper
 echo ${var1,,}   # lower
-
+echo ${var1~~}   # invert
 
 
 # array
@@ -1081,5 +1081,37 @@ done
 ```
 # getopts
 
+
+```
+
+
+
+## parameter expantion
+
+```
+#!/bin/bash
+var1=${1:-66}
+echo "this is var: $var1"
+
+
+echo "the number of aurgument which you enter it: "$#
+
+var2=${2:?"Enter 2 argument"}
+echo "The second element is : $var2"
+
+
+
+
+echo "the length of second argument is: ${#2}"
+
+
+```
+
+# curl 
+
+```
+servername=https://google.com
+response=$(curl --write-out '%{http_code}' --silent --output /dev/null $servername)
+echo $response
 
 ```
