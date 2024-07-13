@@ -709,6 +709,30 @@ output=`add 2 3`
 echo $output
 
 
+# add function
+###################################
+#!/bin/bash
+
+add() {
+
+        sum=0
+        for i in "$@"
+        do
+                #echo "$sum + $i : $(( $sum + $i ))"
+                sum=$(( $sum + $i ))
+        done
+        echo "$sum"
+}
+
+add $@
+
+resutl=`./app-add.sh 3 32  5 2 3 6 2 5 8 `
+
+#######################################
+
+
+
+
 
 ---------------------------------
 
@@ -1033,7 +1057,7 @@ done
 ```
 
 
-# menu
+## menu
 
 ```
 #!/bin/bash
@@ -1107,7 +1131,43 @@ echo "the length of second argument is: ${#2}"
 
 ```
 
-# curl 
+
+
+
+
+## awk
+
+```
+awk '{print $0}' date-rand.txt      # print all things in this file
+awk '{print $1}' date-rand.txt      # print column 1
+awk '{print $2"\t"$1}' date-rand.txt      # print column 2
+
+awk -v var=$USER 'BEGIN{printf "%s\n", var}' random-num-str.txt
+
+
+# run when awk command stored in a file
+awk -f com random-num-str.txt
+
+# send variable into the awk
+awk -v var1="value1" -v var2="value2" '{ print var1, var2, $0 }' input_file.txt
+
+
+
+# find most cpu usage
+threshold=60
+ps -ax --sort=-%cpu --format pid,ppid,%cpu,%mem,cmd | awk -v threshold=$threshold '$3 > threshold { print $0 }'
+
+
+
+```
+
+
+
+
+
+
+
+## curl 
 
 ```
 servername=https://google.com
