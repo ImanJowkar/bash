@@ -1159,6 +1159,32 @@ ps -ax --sort=-%cpu --format pid,ppid,%cpu,%mem,cmd | awk -v threshold=$threshol
 
 
 
+
+cat >> input_file.txt << EOF
+3 3 4 6 8 54 23
+2 3 456 65 45 45 32
+3 3 2 6 8 24 29
+2 3 45 65 75 45 32
+3 3 4 6 8 54 23
+2 3 76 65 46 45 32
+3 3 4 6 8 54 23
+2 3 45 65 45 4 32
+EOF
+
+
+cat input_file.txt  | awk '{ if ( $6 >= 50 ) print $0 }'
+
+
+
+
+```
+
+
+## grep 
+
+```
+cat input_file.txt | grep -e "patter2" -e "pattern1"
+
 ```
 
 
