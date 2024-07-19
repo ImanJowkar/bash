@@ -23,6 +23,60 @@ print_style () {
 
 
 
+
+# this line reads the contents of /etc/os-release and sets the variables defined within it. 
+# This is equivalent to running the file as a script, 
+# which will export various environment variables that describe the OS.
+
+detect_os() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        OS=$ID
+    else
+        echo "Unsupported OS"
+        exit 1
+    fi
+}
+
+
+install_debian() {
+    echo "Detected Debian-based system."
+    sudo apt update
+    sudo apt install -y restic
+}
+
+
+install_redhat() {
+    echo "Detected Red Hat-based system."
+    sudo yum install -y epel-release
+    sudo yum install -y restic
+}
+
+
+
+
+install_restic() {
+
+	detect_os
+
+	case "$OS" in
+    	debian|ubuntu)
+        	install_debian
+        	;;
+    	centos|rhel|fedora)
+        	install_redhat
+        	;;
+    	*)
+        	echo "Unsupported OS: $OS"
+        	exit 1
+        	;;
+	esac
+
+	echo "Restic installation completed."
+
+}
+
+
 ManageProc() {
 clear
 print_style "This menu facilitates process management, making it easy for you to monitor and control processes." "info"
@@ -151,7 +205,7 @@ done
 
 
 PS3="What do you Want to do: "
-select fruit in "Manage your Process." "Adding a iptables rule." "Managing your filesystem." "Quit"
+select fruit in "Manage your Process." "Adding a iptables rule." "Managing your filesystem." "Backup" "Quit"
 do
 
 	case $REPLY in
@@ -167,11 +221,21 @@ do
 			ManagefileSys
 			;;
 
-		4)
-			echo "Quitting "
+		4)	
+			which restic
+			if [[ $? -eq 0 ]] then
+				install_restic
+			fi
+
+			sleep 1
+			
+			;;
+		5)
+			echo "Quitting"
 			sleep 1
 			break
 			;;
+
 		*)
 			echo "bad input!!!"
 			;;
