@@ -223,7 +223,8 @@ do
 
 		4)	
 			which restic
-			if [[ $? -eq 0 ]] then
+			if [[ $? -eq 0 ]] 
+			then
 				install_restic
 			fi
 
