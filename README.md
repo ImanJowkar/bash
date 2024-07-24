@@ -1176,6 +1176,9 @@ cat input_file.txt  | awk '{ if ( $6 >= 50 ) print $0 }'
 
 
 
+# find duplicated files and remove them in a directory
+find . -type f -exec sha1sum {} + | sort | awk '{if($1 == previous){print $2} else{previous=$1}}' | xargs rm -f
+
 
 ```
 
@@ -1208,6 +1211,101 @@ echo $response
 ```
 
 
+
+
+```
+
+
+
+# most bash-script question interview
+
+1. how you would use awk to process a text file and extract specific columns of data.
+
+```
+cat >> input_file.txt << EOF
+3 3 4 6 8 54 23
+2 3 456 65 45 45 32
+3 3 2 6 8 24 29
+2 3 45 65 75 45 32
+3 3 4 6 8 54 23
+2 3 76 65 46 45 32
+3 3 4 6 8 54 23
+2 3 45 65 45 4 32
+EOF
+
+
+cat input_file.txt  | awk '{ if ( $6 >= 50 ) print $0 }'
+
+
+
+```
+
+2. Describe the difference between `$@` and `$*` in a Bash script.
+
+```
+
+echo "$*" # is a string representation of all positional arguments: $1, $2, $3
+echo $@   # same as above
+
+```
+
+3. How can you run a command in the background and capture its output to a variable?
+
+```
+output=$(cat /etc/passwd &)
+
+```
+
+4. Explain how you would handle errors in a Bash script.
+
+```
+resize2fs /dev/myvg/mylv
+if [ $? -ne 0 ]; then
+    echo "Command failed"
+    exit 1
+fi
+
+
+```
+
+5. How would you check if a file exists and is writable in Bash?
+
+```
+if [ -f "$file" ] && [ -w "$file" ]; then
+    echo "File exists and is writable"
+fi
+
+
+```
+
+6. how to pass an array to a function in Bash.
+
+```
+my_function() {
+    local -n arr=$1
+    echo "${arr[@]}"
+}
+arr=(1 2 3)
+my_function arr
+
+
+```
+
+7. How can you append text to a file only if the text doesn't already exist in the file?
+
+```
+grep -qxF 'text' file.txt || echo 'text' >> file.txt
+
+
+```
+
+8. How do you ensure that a script runs with root privileges?
+
+```
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root"
+    exit
+fi
 
 
 ```
